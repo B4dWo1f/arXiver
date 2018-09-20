@@ -3,3 +3,6 @@ In this repo I start my project to personalize arxiv. It should be able to extra
 
 ## Download arXiv
 A simple spider should download daily all the arxiv's cond-mat new papers.
+
+### To-Do
+- [ ] Restructure the read functions. single responsibility!!
