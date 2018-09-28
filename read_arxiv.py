@@ -32,21 +32,22 @@ def retrieve_url(url):
          authors.append(author)
    txt = S.find('blockquote', class_='abstract mathjax').text.lstrip().rstrip()
    txt = txt.replace('Abstract: ','')
-   abstract = clean_abstract( txt )
+   abstract = clean_text( txt )
    subjects = [s.text for s in S.find_all('span', class_='primary-subject') ]
    return arXiv_entry(title,authors,abstract,subjects,arXiv_id,urlpdf)
 
 def get_paper(ID):
    return retrieve_url('https://arxiv.org/abs/%s'%(ID))
 
-def clean_abstract(text):
-   """ Remove dummy line breaks """
+def clean_text(text):
+   """ Remove dummy line breaks and double spaces """
+   text = ' '.join(text.split())
    ret_text = ''
    for x in text.split('\n'):
       ret_text += x
       if x[-1] == '.': ret_text += '\n'
       else: ret_text += ' '
-   return ret_text.lstrip().rstrip()
+   return ret_text.lstrip().rstrip().
 
 
 class arXiv_entry(object):
@@ -106,7 +107,7 @@ if __name__ == '__main__':
             if p.get('title') == 'Download PDF':
                urlpdf = 'http://arxiv.org'+p.get('href')
          title = t.text.replace('Title: ','').lstrip().rstrip()
-         abstract = clean_abstract( a.text.lstrip().rstrip() )
+         abstract = clean_text( a.text.lstrip().rstrip() )
          arXiv_id = i.text.split()[0].replace('arXiv:','')
          A = arXiv_entry(title,abstract=abstract,ID=arXiv_id,url=urlpdf)
          sections[sect].append(A)
