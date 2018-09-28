@@ -47,7 +47,7 @@ def clean_text(text):
       ret_text += x
       if x[-1] == '.': ret_text += '\n'
       else: ret_text += ' '
-   return ret_text.lstrip().rstrip().
+   return ret_text.lstrip().rstrip()
 
 
 class arXiv_entry(object):
@@ -71,6 +71,7 @@ class arXiv_entry(object):
 if __name__ == '__main__':
    url = 'https://arxiv.org/list/cond-mat/new'
    fname = 'condmat.arxiv'
+   f_out = dt.datetime.now().strftime('%Y_%m_%d')+'.dat'
 
    html_doc = open(fname,'r').read()
    S = BeautifulSoup(html_doc, 'html.parser')
@@ -79,6 +80,7 @@ if __name__ == '__main__':
    date = dt.datetime.strptime(date,'%a, %d %b %y').date()
    today = dt.datetime.now().date()
    if date != today:
+      print('** Downloading')
       html_doc = make_request(url) # Main web site
       f = open(fname,'w')
       f.write(html_doc)
@@ -115,7 +117,7 @@ if __name__ == '__main__':
 
 
    ## Save abstracts and Score
-   f = open('datos.dat','a')
+   f = open(f_out,'a')
    for t,b in zip(titles,sections):
       print(t)
       for a in b:
