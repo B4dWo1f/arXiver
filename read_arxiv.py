@@ -126,5 +126,5 @@ if __name__ == '__main__':
          resp = input("Is this paper relevant for you?\n1-Yes  2-Meh  3-Nope\n")
          if resp not in ['1','2']: resp = '3'
          f.write(a.ID+'   '+resp+'\n')
-      print('')
+      print('\n')
    f.close()
