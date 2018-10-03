@@ -43,3 +43,18 @@ def title(text):
    msg += '\033[1m' +center(text)+ '\033[0m'+'\n'
    msg += '='*X
    return msg
+
+def breakline(text,W=0):
+   """
+    Introduce breaklines when printing to avoid splitting words
+   """
+   if W == 0: W,Y = console.getTerminalSize()
+   final_text = ''
+   current_sentence = ''
+   for w in text.split():
+      if len(current_sentence+w) >= W:
+         final_text += current_sentence + '\n'
+         current_sentence = ''
+      else:   
+         current_sentence += w + ' '
+   return final_text

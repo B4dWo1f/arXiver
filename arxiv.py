@@ -31,8 +31,12 @@ class arXiv_entry(object):
       if self.index != None: msg += '[%s] '%(self.index)
       msg +=  'arXivID: %s\n'%(self.ID)
       msg += text.title(self.title)
-      msg += 'pdf: %s\n'%(self.urlpdf)
+      msg += 'Author'
+      if len(self.author) > 1: msg += 's: '
+      else: msg += ': '
+      msg += ', '.join([a.name for a in self.author]) + '\n'
+      msg += self.abstract+'\n'
       if len(self.subjects)>0: msg+='subjects: '+' '.join(self.subjects) + '\n'
-      msg += self.abstract
+      msg += 'pdf: %s'%(self.urlpdf)
       return msg
 
