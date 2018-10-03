@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 # -*- coding: UTF-8 -*-
 
-
+import os
 from urllib.request import Request, urlopen
 import datetime as dt
 from bs4 import BeautifulSoup
@@ -41,32 +41,18 @@ def retrieve_url(url):
 def get_paper(ID):
    return retrieve_url('https://arxiv.org/abs/%s'%(ID))
 
-#def clean_text(text):
-#   """ Remove dummy line breaks and double spaces """
-#   text = ' '.join(text.split())
-#   ret_text = ''
-#   for x in text.split('\n'):
-#      ret_text += x
-#      if x[-1] == '.': ret_text += '\n'
-#      else: ret_text += ' '
-#   return ret_text.lstrip().rstrip()
 
-
-#class arXiv_entry(object):
-#   def __init__(self,title='',authors=[],abstract='',subject=[],ID='',url=''):
-#      self.title = '\033[1m' + title + '\033[0m'
-#      self.author = authors
-#      self.abstract = abstract
-#      self.subjects = subject
-#      self.ID = ID
-#      self.url = url
-#   def __str__(self):
-#      msg =  'arXivID: %s\n'%(self.ID)
-#      msg += 'Title: %s\n'%(self.title)
-#      if len(self.subjects)>0: msg+='subjects: '+' '.join(self.subjects) + '\n'
-#      if self.url != '': msg += 'pdf: %s\n'%(self.url)
-#      msg += 'Abstract: %s'%(self.abstract)
-#      return msg
+def open_relevant(fname):
+   relevants = os.popen('grep -v " 3" %s'%(fname)).read()
+   relevants = relevants.splitlines()
+   base_url = 'https://arxiv.org/pdf/'
+   urls = []
+   for i in relevants:
+      arxivID = i.split()[0]
+      urls.append(base_url+arxivID)
+   com = 'firefox -new-tab -url ' + ' -new-tab -url '.join(urls)
+   print(com)
+   os.system('nohup ' + com + ' &')
 
 
 
@@ -75,7 +61,7 @@ if __name__ == '__main__':
    URLbase = 'https://arxiv.org'
    fname = 'condmat.arxiv'
    today = dt.datetime.now().date()
-   f_out = today.strftime('%Y_%m_%d')+'.dat'
+   f_out = 'data/' + today.strftime('%Y_%m_%d')+'.dat'
 
    try:
       html_doc = open(fname,'r').read()
@@ -143,7 +129,7 @@ if __name__ == '__main__':
 
 
    ## Save abstracts and Score
-   f = open(f_out,'a')
+   f = open(f_out,'w')
    for t,b in zip(titles,sections):
       print(t)
       for a in b:
@@ -155,3 +141,4 @@ if __name__ == '__main__':
          print('')
       print('\n')
    f.close()
+   open_relevant(f_out)
