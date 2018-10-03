@@ -9,7 +9,7 @@ today = now.date().strftime('%Y_%m_%d')
 relevants = os.popen('grep -v " 3" %s.dat'%(today)).read()
 relevants = relevants.splitlines()
 
-base_url = 'https://arxiv.org/abs/'
+base_url = 'https://arxiv.org/pdf/'
 urls = []
 for i in relevants:
    arxivID = i.split()[0]
