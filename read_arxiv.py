@@ -50,17 +50,19 @@ def open_relevant(fname):
    for i in relevants:
       arxivID = i.split()[0]
       urls.append(base_url+arxivID)
-   com = 'firefox -new-tab -url ' + ' -new-tab -url '.join(urls)
-   print(com)
-   os.system('nohup ' + com + ' &')
+   if len(urls) > 0:
+      com = 'firefox -new-tab -url ' + ' -new-tab -url '.join(urls)
+      print(com)
+      os.system('nohup ' + com + ' &')
+   else: print('No URLs to open')
 
 
 
 if __name__ == '__main__':
    url = 'https://arxiv.org/list/cond-mat/new'
    URLbase = 'https://arxiv.org'
-   fname = 'condmat.arxiv'
    today = dt.datetime.now().date()
+   fname = 'data/' + today.strftime('%y%m.%d') + '.arxiv'
    f_out = 'data/' + today.strftime('%Y_%m_%d')+'.dat'
 
    try:
