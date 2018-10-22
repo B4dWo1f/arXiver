@@ -2,6 +2,7 @@
 # -*- coding: UTF-8 -*-
 
 import os
+here = os.path.dirname(os.path.realpath(__file__))  # script folder
 from urllib.request import Request, urlopen
 import datetime as dt
 from bs4 import BeautifulSoup
@@ -62,8 +63,8 @@ if __name__ == '__main__':
    url = 'https://arxiv.org/list/cond-mat/new'
    URLbase = 'https://arxiv.org'
    today = dt.datetime.now().date()
-   fname = 'data/' + today.strftime('%y%m.%d') + '.arxiv'
-   f_out = 'data/' + today.strftime('%Y_%m_%d')+'.dat'
+   fname = here + '/data/' + today.strftime('%y%m.%d') + '.arxiv'
+   f_out = here + '/data/' + today.strftime('%Y_%m_%d')+'.dat'
 
    try:
       html_doc = open(fname,'r').read()

@@ -1,4 +1,6 @@
 old/
-*.arxiv
-*.dat
+data/
+**.arxiv
+**.dat
 nohup.out
+crawler/
