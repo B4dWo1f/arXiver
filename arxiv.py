@@ -72,7 +72,10 @@ def get_paper_info(url):
 
 if __name__ == '__main__':
    import os
+   import datetime as dt
    here = os.path.dirname(os.path.realpath(__file__))  # script folder
+   today = dt.datetime.now().date()
+
 
    url = 'https://arxiv.org/list/cond-mat/new'
    URLbase = 'https://arxiv.org'
