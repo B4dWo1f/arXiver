@@ -71,6 +71,9 @@ def get_paper_info(url):
    return arXiv_entry(title,authors,abstract,subjects,arXiv_id,urlpdf)
 
 if __name__ == '__main__':
+   import os
+   here = os.path.dirname(os.path.realpath(__file__))  # script folder
+
    url = 'https://arxiv.org/list/cond-mat/new'
    URLbase = 'https://arxiv.org'
    html_doc = make_request(url) # Main web site
