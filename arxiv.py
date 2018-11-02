@@ -76,12 +76,26 @@ if __name__ == '__main__':
    here = os.path.dirname(os.path.realpath(__file__))  # script folder
    today = dt.datetime.now().date()
 
+   import logging
+   logging.basicConfig(level=logging.DEBUG,
+                     format='%(asctime)s-%(name)-s-%(levelname)-s-%(message)s',
+                     datefmt='%Y/%m/%d-%H:%M',
+                     filename=here+'/arxiver.log', filemode='a')
+   sh = logging.StreamHandler()
+   sh.setLevel(logging.WARNING)
+   fmt = logging.Formatter('%(name)s: %(levelname)s %(message)s')
+   sh.setFormatter(fmt)
+   logging.getLogger('').addHandler(sh)
+   LG = logging.getLogger('main')
+
 
    url = 'https://arxiv.org/list/cond-mat/new'
    URLbase = 'https://arxiv.org'
+   LG.info('Attempting to download '+url)
    html_doc = make_request(url) # Main web site
    fname = here + '/data/' + today.strftime('%y%m.%d') + '.arxiv'
    
    f = open(fname,'w')
    f.write(html_doc)
    f.close()
+   LG.info('Saved to '+fname)
