@@ -65,7 +65,7 @@ if __name__ == '__main__':
    today = dt.datetime.now().date()
    fname = here + '/data/' + today.strftime('%y%m.%d') + '.arxiv'
    f_out = here + '/data/' + today.strftime('%Y_%m_%d')+'.dat'
-   os.system('mkdir %s/data'%(here))
+   os.system('mkdir -p %s/data'%(here))
 
    try:
       html_doc = open(fname,'r').read()
